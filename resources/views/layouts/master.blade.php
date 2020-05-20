@@ -67,13 +67,13 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <router-link to="./dashboard" class="nav-link">
-              <i class="fas fa-tachometer-alt nav-icon"></i>
+              <i class="fas fa-tachometer-alt nav-icon green"></i>
               <p>Dashboard</p>
             </router-link>
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-cog"></i>
+              <i class="nav-icon fa fa-cog blue"></i>
               <p>
                 Management
                 <i class="right fas fa-angle-left"></i>
@@ -97,15 +97,23 @@
 
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
-              <i class="fas fa-user nav-icon"></i>
+              <i class="fas fa-user nav-icon orange"></i>
               <p>Profile</p>
             </router-link>
           </li>
           <li class="nav-item">
-            <a href="./index.html" class="nav-link">
-              <i class="fa fa-power-off nav-icon"></i>
-              <p>Logout</p>
+            <a class="nav-link" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();">
+                <i class="fa fa-power-off nav-icon red"></i>
+                <p> 
+                  {{ __('Logout') }}
+                </p>
             </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
           </li>
           
         </ul>
