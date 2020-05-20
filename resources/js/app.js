@@ -17,6 +17,14 @@ Vue.component(AlertError.name, AlertError)
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+import VueProgressBar from 'vue-progressbar'
+Vue.use(VueProgressBar, options)
+const options = {
+    color: 'rba(143, 255, 199)',
+    failedColor: 'red',
+    thickness: '3px'
+  }
+
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default  },
     { path: '/users', component: require('./components/Users.vue').default  },
