@@ -28,7 +28,8 @@
                       <td>{{ user.id }}</td>
                       <td>{{ user.name }}</td>
                       <td>{{ user.email }}</td>
-                      <td>{{ user.type | upText }}</td>
+                      <!-- Filter -->
+                      <td>{{ user.type | upText }}</td> 
                       <td>{{ user.created_at | myDate }}</td>
                       <td>
                         <a href="#">
@@ -131,6 +132,8 @@
             this.$Progress.start();
             this.form.post('api/user');
 
+            // Custom event, create an event
+            Fire.$emit('afterCreate');
             $('#addNew').modal('hide')
 
             Toast.fire({
@@ -145,6 +148,11 @@
         },
         created () {
           this.loadUsers();
+          // Waiting for the event, after creating the user load the function again
+          // which call the function. Listen for event to trigger a function 
+          Fire.$on('afterCreate', () => {
+            this.loadUsers();
+          });
         }
     }
 </script>

@@ -2137,6 +2137,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2154,7 +2155,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     createUser: function createUser() {
       this.$Progress.start();
-      this.form.post('api/user');
+      this.form.post('api/user'); // Custom event, create an event
+
+      Fire.$emit('afterCreate');
       $('#addNew').modal('hide');
       Toast.fire({
         icon: 'success',
@@ -2172,7 +2175,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.loadUsers();
+    var _this2 = this;
+
+    this.loadUsers(); // Waiting for the event, after creating the user load the function again
+    // which call the function. Listen for event to trigger a function 
+
+    Fire.$on('afterCreate', function () {
+      _this2.loadUsers();
+    });
   }
 });
 
@@ -78654,6 +78664,7 @@ Vue.filter('upText', function (text) {
 Vue.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(created).format('MMMM Do YYYY');
 });
+window.Fire = new Vue();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
