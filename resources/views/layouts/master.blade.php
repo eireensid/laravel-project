@@ -81,16 +81,10 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inactive Page</p>
-                </a>
+                <router-link to="/users" class="nav-link">
+                  <i class="fas fa-users nav-icon yellow"></i>
+                  <p>Users</p>
+                </router-link>
               </li>
             </ul>
           </li>
