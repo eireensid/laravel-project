@@ -120,6 +120,7 @@
           return {
             users: {},
             form: new Form({
+              id: '',
               name: '',
               email: '',
               password: '',
@@ -137,7 +138,7 @@
 
             .then(() => {
               // Custom event, create an event
-              Fire.$emit('afterCreate');
+              Fire.$emit('actionDone');
               $('#addNew').modal('hide')
 
               Toast.fire({
@@ -173,7 +174,7 @@
                       'Your file has been deleted.',
                       'success'
                     )
-                    Fire.$emit('afterCreate');
+                    Fire.$emit('actionDone');
                   
                 }).catch(() => {
                   Swal('Failed', 'There was something wrong.', 'warning');
@@ -195,8 +196,22 @@
             this.form.reset();
             $('#addNew').modal('show');
           },
-          updateUser() {
-
+          updateUser(id) {
+            this.$Progress.start();
+            this.form.put('api/user/' + this.form.id)
+            .then(() => {
+              $('#addNew').modal('hide');
+              Swal.fire(
+                      'Updated!',
+                      'Information has been updated.',
+                      'success'
+                    )
+              this.$Progress.finish();
+              Fire.$emit('actionDone');
+            })
+            .catch(() => {
+              this.$Progress.fail();
+            });
           },
           editModal(user) {
             this.editMode = true;
@@ -209,7 +224,7 @@
           this.loadUsers();
           // Waiting for the event, after creating the user load the function again
           // which call the function. Listen for event to trigger a function 
-          Fire.$on('afterCreate', () => {
+          Fire.$on('actionDone', () => {
             this.loadUsers();
           });
         }

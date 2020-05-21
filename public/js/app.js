@@ -2145,6 +2145,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       users: {},
       form: new Form({
+        id: '',
         name: '',
         email: '',
         password: '',
@@ -2162,7 +2163,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start();
       this.form.post('api/user').then(function () {
         // Custom event, create an event
-        Fire.$emit('afterCreate');
+        Fire.$emit('actionDone');
         $('#addNew').modal('hide');
         Toast.fire({
           icon: 'success',
@@ -2198,7 +2199,7 @@ __webpack_require__.r(__webpack_exports__);
         if (result.value) {
           _this3.form["delete"]('api/user/' + id).then(function () {
             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-            Fire.$emit('afterCreate');
+            Fire.$emit('actionDone');
           })["catch"](function () {
             Swal('Failed', 'There was something wrong.', 'warning');
           });
@@ -2214,7 +2215,21 @@ __webpack_require__.r(__webpack_exports__);
       this.form.reset();
       $('#addNew').modal('show');
     },
-    updateUser: function updateUser() {},
+    updateUser: function updateUser(id) {
+      var _this4 = this;
+
+      this.$Progress.start();
+      this.form.put('api/user/' + this.form.id).then(function () {
+        $('#addNew').modal('hide');
+        Swal.fire('Updated!', 'Information has been updated.', 'success');
+
+        _this4.$Progress.finish();
+
+        Fire.$emit('actionDone');
+      })["catch"](function () {
+        _this4.$Progress.fail();
+      });
+    },
     editModal: function editModal(user) {
       this.editMode = true;
       this.form.reset();
@@ -2223,13 +2238,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.loadUsers(); // Waiting for the event, after creating the user load the function again
     // which call the function. Listen for event to trigger a function 
 
-    Fire.$on('afterCreate', function () {
-      _this4.loadUsers();
+    Fire.$on('actionDone', function () {
+      _this5.loadUsers();
     });
   }
 });
