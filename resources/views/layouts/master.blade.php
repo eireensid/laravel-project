@@ -90,6 +90,12 @@
           </li>
 
           <li class="nav-item">
+            <router-link to="/developer" class="nav-link">
+              <i class="fas fa-cogs nav-icon"></i>
+              <p>Developer</p>
+            </router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="fas fa-user nav-icon orange"></i>
               <p>Profile</p>
