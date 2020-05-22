@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-       <div class="row mt-4">
+       <div class="row mt-4" v-if='$gate.isAdmin()'>
           <div class="col-12">
             <div class="card">
               <div class="card-header">
@@ -152,7 +152,9 @@
             })
           },
           loadUsers() {
-            axios.get('api/user').then(({ data }) => (this.users = data.data))
+            if (this.$gate.isAdmin()) {
+              axios.get('api/user').then(({ data }) => (this.users = data.data))
+            }
           },
           deleteUser(id) {
             Swal.fire({
